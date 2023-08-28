@@ -8,7 +8,18 @@
 import SwiftUI
 
 struct ThreadCell: View {
+    @StateObject private var viewModel: ThreadCellViewModel
+    
     let thread: Thread
+    
+    init(thread: Thread) {
+        self.thread = thread
+        self._viewModel = StateObject(wrappedValue: ThreadCellViewModel(thread: thread))
+    }
+    
+    private var didLiked: Bool {
+        return viewModel.thread.didLiked ?? false
+    }
     
     var body: some View {
         VStack {
@@ -42,9 +53,15 @@ struct ThreadCell: View {
                     
                     HStack(spacing: 16) {
                         Button {
-                            
+                            if didLiked {
+                                Task { try await viewModel.unlike() }
+                            } else {
+                                Task { try await viewModel.like() }
+                            }                            
                         } label: {
-                            Image(systemName: "heart")
+                            Image(systemName: didLiked ? "heart.fill" : "heart")
+                                .imageScale(.large)
+                                .foregroundColor(didLiked ? .red : .black)
                         }
                         
                         Button {

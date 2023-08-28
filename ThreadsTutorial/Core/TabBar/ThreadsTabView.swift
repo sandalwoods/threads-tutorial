@@ -30,7 +30,7 @@ struct ThreadsTabView: View {
             
             Text("")
                 .tabItem {
-                    Image(systemName: "plus")
+                    Image(systemName: "square.and.pencil")
                 }
                 .onAppear{ selectedTab = 2 }
                 .tag(2)

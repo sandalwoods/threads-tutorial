@@ -29,4 +29,18 @@ struct ThreadService {
         
         return threads.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue() })
     }
+    
+    static func likeThread(threadId: String) async throws {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        try await Firestore.firestore().collection("threads").document(threadId).collection("thread-likes").document(uid).setData([:])
+        try await Firestore.firestore().collection("users").document(uid).collection("user-likes").document(threadId).setData([:])
+    }
+    
+    static func unlikeThread(threadId: String) async throws {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        try await Firestore.firestore().collection("threads").document(threadId).collection("thread-likes").document(uid).delete()
+        try await Firestore.firestore().collection("users").document(uid).collection("user-likes").document(threadId).delete()
+    }
 }

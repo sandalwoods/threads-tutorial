@@ -49,10 +49,12 @@ struct CurrentUserProfile: View {
             })
             .toolbar(content: {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        AuthService.shared.signOut()
+                    NavigationLink {
+                        SettingsView()
+//                            .navigationBarBackButtonHidden(true)
                     } label: {
                         Image(systemName: "line.3.horizontal")
+                            .foregroundColor(.black)
                     }
                 }
             })

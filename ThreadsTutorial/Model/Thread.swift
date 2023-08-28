@@ -16,6 +16,7 @@ struct Thread: Identifiable, Codable {
     var likes: Int
     
     var user: User?
+    var didLiked: Bool?
     
     var id: String {
         return threadId ?? NSUUID().uuidString
