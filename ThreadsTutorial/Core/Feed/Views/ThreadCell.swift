@@ -21,9 +21,11 @@ struct ThreadCell: View {
         return viewModel.thread.didLiked ?? false
     }
     
+    
     var body: some View {
         VStack {
             HStack {
+                
                 CircularProfileImageView(user: thread.user, size: .small)
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -35,8 +37,8 @@ struct ThreadCell: View {
                         Spacer()
                         
                         Text(thread.timestamp.timestampString())
-                                .font(.caption)
-                                .foregroundColor(Color(.systemGray3))
+                            .font(.caption)
+                            .foregroundColor(Color(.systemGray3))
                         
                         Button {
                             
@@ -44,7 +46,7 @@ struct ThreadCell: View {
                             Image(systemName: "ellipsis")
                                 .foregroundColor(Color(.darkGray))
                         }
-
+                        
                     }
                     
                     Text(thread.caption)
@@ -57,7 +59,7 @@ struct ThreadCell: View {
                                 Task { try await viewModel.unlike() }
                             } else {
                                 Task { try await viewModel.like() }
-                            }                            
+                            }
                         } label: {
                             Image(systemName: didLiked ? "heart.fill" : "heart")
                                 .imageScale(.large)
@@ -84,7 +86,12 @@ struct ThreadCell: View {
                     }
                     .foregroundColor(.black)
                     .padding(.vertical, 8)
+                    
+                    Text(viewModel.likeString)
+                        .font(.caption)
+                        .foregroundColor(Color(.systemGray3))
                 }
+                
             }
             Divider()
         }
